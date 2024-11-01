@@ -1,1 +1,0 @@
-Django back end development.
