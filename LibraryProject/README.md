@@ -1,1 +1,1 @@
-Django back end development.
+Learning Django back end development
