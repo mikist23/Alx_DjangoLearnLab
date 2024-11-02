@@ -1,5 +1,6 @@
 <!-- command -->
-In [22]: retrived_book = Book.objects.get(id=2)
+from bookshelf.models import Book
+deleted_book = Book.objects.get(id=1)
+deleted_book.delete()
 <!-- output -->
-In [23]: retrived_book.delete()
 Out[23]: (1, {'bookshelf.Book': 1})
