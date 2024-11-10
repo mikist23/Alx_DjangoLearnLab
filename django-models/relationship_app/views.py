@@ -56,7 +56,7 @@ def register(request):
 
 
 def is_admin(user):
-    return user.userprofile.role == 'Admin'
+    return user.userprofile.role == 'Admins'
 
 def is_librarian(user):
     return user.userprofile.role == 'Librarians'
