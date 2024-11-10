@@ -20,8 +20,6 @@ Author.objects.get(name=author_name)
 
 # books = Library.objects.all()
 # Library.objects.get(name='Mike  Absai Library')
-library_name = 'Mike  Absai Library'
-Library.objects.get(name=library_name)
 
 books = Book.objects.all()
 books.all()
@@ -33,3 +31,7 @@ books.all()
 
 
 # Retrieve the librarian for a library.
+
+library_name = 'Mike  Absai Library'
+library = Library.objects.get(name=library_name)
+Librarian.objects.get(library=library)
