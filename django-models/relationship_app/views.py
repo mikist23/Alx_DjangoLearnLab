@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from relationship_app.models import Book, Library
+from relationship_app.models import Book
+from relationship_app.models import Library
 from django.views.generic import DetailView
 
 
@@ -16,7 +17,8 @@ def list_book(request):
 
 class ModelDetailView(DetailView):
     model = Library
-    template_name = "library_detail.html"
+    # template_name = "library_detail.html"
+    template_name = "relationship_app/library_detail.html"
     context_name = 'library'  
     
     def get_context_data(self, **kwargs):
