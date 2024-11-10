@@ -6,9 +6,3 @@ class RelationshipAppConfig(AppConfig):
     name = 'relationship_app'
 
 
-class YourAppConfig(AppConfig):
-    name = 'yourapp'
-
-    def ready(self):
-        pass
-        # import yourapp.signals
