@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from relationship_app.models import Book
-from relationship_app.models import Library
+from .models import Book
+from .models import Library
 from django.views.generic import DetailView
 
 
