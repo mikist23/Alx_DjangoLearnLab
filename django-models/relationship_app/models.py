@@ -21,8 +21,8 @@ class Author(models.Model):
 
 class Book(models.Model):
     title = models.CharField(max_length=200)
-    author = models.CharField(max_length=200)  # Use CharField if not referencing the Author model directly
-    published_date = models.DateField(default=timezone.now)  # Import timezone from django.utils
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)  
+    published_date = models.DateField(default=timezone.now)  
 
 
     class Meta:
@@ -34,6 +34,8 @@ class Book(models.Model):
     
     def __str__(self):
         return self.title
+    
+    
     
 
 
