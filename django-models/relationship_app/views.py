@@ -26,9 +26,9 @@ from django.contrib.auth.decorators import permission_required
 # Create your views here.
 def list_books(request):
     books = Book.objects.all()
-    context = {'book_list': books}
+    # context = {'book_list': books}
     # return render(request, 'list_books.html', context)
-    return render(request, 'relationship_app/list_books.html', context)
+    return render(request, 'relationship_app/list_books.html', {'book_list': books})
 
 
 class LibraryDetailView(DetailView):
