@@ -10,7 +10,7 @@
     <h2>Books in Library:</h2>
     <ul>
         {% for book in library.books.all %}
-        <li>{{ book.title }} by {{ book.author.name }} (Published {{ book.publication_year }})</li>
+        <li>{{ book.title }} by {{ book.author.name }} (Published {{ book.published_date }})</li>
         {% endfor %}
     </ul>
 </body>
