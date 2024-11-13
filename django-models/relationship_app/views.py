@@ -7,6 +7,7 @@ from django.views.generic.detail import DetailView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
 
 
 from .models import UserProfile
@@ -37,6 +38,10 @@ class LibraryDetailView(DetailView):
     template_name = "relationship_app/library_detail.html"
     context_name = 'library'  
     
+@login_required
+def home(request):
+    return render(request, 'relationship_app/home.html')
+
 
 def register(request):
     if request.method == "POST":
