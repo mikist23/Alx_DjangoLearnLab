@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Book
-from .models import Library
+from .models import Library, UserProfile
 from django.views.generic.detail import DetailView
 
 from django.contrib.auth.views import LoginView, LogoutView
@@ -71,6 +71,7 @@ def is_librarian(user):
 def is_member(user):
     return user.userprofile.role == 'Member'
 
+
 @user_passes_test(is_admin)
 def admin_view(request):
     return render(request, 'relationship_app/admin_view.html')
@@ -82,7 +83,6 @@ def librarian_view(request):
 @user_passes_test(is_member)
 def member_view(request):
     return render(request, 'relationship_app/member_view.html')
-
 
 
 
