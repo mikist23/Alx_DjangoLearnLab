@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.decorators import permission_required
-from .models import Article
+from .models import Article, Book
 
 @permission_required('bookshelf.can_view', raise_exception=True)
 def article_list(request):
@@ -30,3 +30,9 @@ def article_delete(request, pk):
     if request.method == "POST":
         article.delete()
     return render(request, 'bookshelf/article_delete.html', {'article': article})
+
+
+@permission_required('bookshelf.can_view', raise_exception=True)
+def book_list(request):
+    books = Book.objects.all()
+    return render(request, 'bookshelf/view_books.html', {'books':books})
