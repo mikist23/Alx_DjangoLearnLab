@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 
 # Create your models here.
 
+# Task 0
 class CustomUserManager(BaseUserManager):
 
     def create_user(self, email, date_of_birth, password=None, **extra_fields):
@@ -50,3 +51,21 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.email
     
+
+    # TASK 1
+class Article(models.Model):
+    title = models.CharField(max_length=250)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        permissions = [
+            ('can_view', 'Can view article'),
+            ('can_create', "Can create article"),
+             ('can_edit', 'Can edit article'),
+             ('can_delete', 'Can delete article')
+        ]
+
+    def __str__(self):
+        return self.title
