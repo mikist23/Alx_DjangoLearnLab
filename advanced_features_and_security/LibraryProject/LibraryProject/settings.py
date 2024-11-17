@@ -23,12 +23,23 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-lu$kq&l(va8f3k(*4&(p$+1&1*g1d#j*9ur3lwghyu981u@a!z'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
+# Browser security headers
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'DENY'
+
+
+# Secure cookies
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 
 # Application definition
+
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -39,6 +50,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bookshelf',
 ]
+
+# CSP
+INSTALLED_APPS += ['csp']
+
+CSP_DEFAULT_SRC = ["'self'"]
+CSP_SCRIPT_SRC = ["'self'", 'https://trusted-scripts.com']
+CSP_STYLE_SRC = ["'self'", 'https://trusted-styles.com']
+CSP_IMG_SRC = ["'self'", 'https://trusted-images.com']
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
