@@ -1,5 +1,5 @@
 <form method="post" action="{% url 'form_submission_view' %}">
     {% csrf_token %}
-    <!-- Form fields -->
+    {{form}}
     <button type="submit">Submit</button>
 </form>
