@@ -53,6 +53,10 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 
 
+# This tells Django to trust the HTTP_X_FORWARDED_PROTO header sent by the reverse proxy to determine if the original request was made via HTTPS.
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+
 # Application definition
 
 INSTALLED_APPS = [
