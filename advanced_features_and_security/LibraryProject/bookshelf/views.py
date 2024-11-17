@@ -29,4 +29,4 @@ def article_delete(request, pk):
     article = get_object_or_404(Article, pk=pk)
     if request.method == "POST":
         article.delete()
-    return render(request, 'myapp/article_delete.html', {'article': article})
+    return render(request, 'bookshelf/article_delete.html', {'article': article})
