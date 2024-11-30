@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'api',
     'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -100,6 +101,27 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+SIMPLE_JWT = {
+     
+     
+     'AUTH_HEADER_TYPES': ('JWT',),
+    
+}
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        # 'rest_framework.authentication.SessionAuthentication',  # For session-based auth
+        # 'rest_framework.authentication.BasicAuthentication',    # For basic auth
+        'rest_framework.authentication.TokenAuthentication',    # For token-based auth (if needed)
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',  # Default permission
+    ],
+}
+
+
 
 
 # Internationalization
