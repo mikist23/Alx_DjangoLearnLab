@@ -9,7 +9,7 @@ class CustomBookListView(generics.ListAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
 
-class CustomBookDetalView(generics.RetrieveAPIView):
+class CustomBookDetailView(generics.RetrieveAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     lookup_field = 'id'
