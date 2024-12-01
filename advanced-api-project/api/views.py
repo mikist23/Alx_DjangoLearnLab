@@ -22,7 +22,9 @@ class CustomBookListView(generics.ListAPIView):
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'author']
 
-    
+    # ordering
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = ['title', 'publication_year']
 
 class CustomBookDetailView(generics.RetrieveAPIView):
     queryset = Book.objects.all()
