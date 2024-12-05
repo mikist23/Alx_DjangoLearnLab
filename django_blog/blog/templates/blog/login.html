@@ -1,0 +1,12 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+<div class="login-container">
+    <h2 style="text-align: center; margin-bottom: 20px;">Login</h2>
+    <form method="post", autocomplete="off">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+</div>
+{% endblock %}
