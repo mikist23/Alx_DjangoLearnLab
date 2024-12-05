@@ -6,23 +6,26 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
+    font-family: 'Roboto', Arial, sans-serif;
+    background-color: #f4f4f9;
     color: #333;
+    line-height: 1.6;
 }
 
 header {
-    background-color: #333;
-    padding: 10px;
-    text-align: center;
+    background-color: #1e90ff;
+    padding: 15px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 header nav ul {
     list-style-type: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 header nav ul li {
-    display: inline;
     margin: 0 15px;
 }
 
@@ -30,16 +33,164 @@ header nav ul li a {
     color: white;
     text-decoration: none;
     font-size: 18px;
+    transition: color 0.3s ease;
+}
+
+header nav ul li a:hover {
+    color: #ffcc00;
 }
 
 .content {
-    margin: 20px;
+    margin: 40px auto;
+    max-width: 900px;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 footer {
     text-align: center;
     margin-top: 50px;
-    padding: 10px;
-    background-color: #333;
+    padding: 15px;
+    background-color: #1e90ff;
     color: white;
+    font-size: 14px;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Additional Styling */
+header nav ul li a.active {
+    font-weight: bold;
+    color: #ffcc00;
+}
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+footer a {
+    color: #ffcc00;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header nav ul {
+        flex-direction: column;
+    }
+
+    header nav ul li {
+        margin: 10px 0;
+    }
+
+    .content {
+        margin: 20px;
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    header nav ul li a {
+        font-size: 16px;
+    }
+
+    footer {
+        font-size: 12px;
+    }
+}
+
+
+
+/* Registration Form Styles */
+form {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+form p {
+    margin-bottom: 15px;
+}
+
+form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #333;
+}
+
+form input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    transition: border-color 0.3s ease;
+}
+
+form input:focus {
+    border-color: #1e90ff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(30, 144, 255, 0.5);
+}
+
+form .errorlist {
+    color: #ff4d4d;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+form button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: #1e90ff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #1c86ee;
+}
+
+form .helptext {
+    font-size: 12px;
+    color: #666;
+    margin-top: -5px;
+    margin-bottom: 15px;
+}
+
+/* Center error messages */
+form .errorlist li {
+    list-style: none;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 480px) {
+    form {
+        margin: 20px;
+        padding: 15px;
+    }
+
+    form button {
+        font-size: 14px;
+        padding: 8px;
+    }
 }
