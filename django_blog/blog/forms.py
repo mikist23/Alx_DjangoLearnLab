@@ -40,7 +40,7 @@ class CreatePostForm(forms.ModelForm):
 
 # create a comment post form
 
-class CommentPostForm(forms.ModelForm):
+class CommentForm(forms.ModelForm):
 
     class Meta:
         model = Comment

@@ -122,7 +122,8 @@ class DeletePost(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 # Comment CRUD operations
 class CommentCreateView(LoginRequiredMixin, CreateView):
-    model = Comment
+    model = Comment 
+    
 class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Comment
     fields = ['content']
