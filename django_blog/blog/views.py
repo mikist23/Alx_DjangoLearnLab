@@ -1,14 +1,14 @@
 from django.shortcuts import render, redirect
-from .forms import RegisterUserForm, LoginUserForm
+from .forms import RegisterUserForm, LoginUserForm, CreatePostForm
 from django.contrib.auth import authenticate
 from django.contrib.auth import login
 from django.contrib.auth.models import User
 from .models import Post
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .serializers import PostSerializers
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DetailView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from rest_framework import generics, permissions, status, authentication
-
+from django.urls import reverse_lazy
 # Create your views here.
 
 def register_user(request):
@@ -59,7 +59,7 @@ def profile(request):
     return render(request, 'blog/profile.html')
 
 
-# create a post
+# create a post CRUD operations
 
 class ListPost(ListView):
     model = Post
@@ -71,21 +71,32 @@ class DetailPost(DetailView):
     template_name = 'blog/post_detail.html'
     context_object_name = 'post'
 
-class CreatePost(CreateView):
-    queryset = Post.objects.all()
-    serializer_class = PostSerializers
-    permission_classes = [permissions.AllowAny]
+class CreatePost(LoginRequiredMixin, CreateView):
+    model = Post
+    form_class = CreatePostForm
+    template_name = 'blog/post_form.html'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+        
 
 
-class UpdatePost(generics.UpdateAPIView):
-    queryset = Post.objects.all()
-    serializer_class = PostSerializers
-    permission_classes = [permissions.AllowAny]
-    lookup_field = 'id'
+class UpdatePost(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Post
+    form_class = CreatePostForm
+    template_name = 'blog/post_form.html'
 
-class DeletePost(generics.DestroyAPIView):
-    queryset = Post.objects.all()
-    serializer_class = PostSerializers
-    permission_classes = [permissions.AllowAny]
-    lookup_field = 'id'
+    def test_func(self):
+        post = self.get_object()
+        return self.request.user == post.author
+
+class DeletePost(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Post
+    template_name = 'blog/post_delete.html'
+    success_url = reverse_lazy('list_post')
+
+    def test_func(self):
+        post = self.get_object()
+        return self.request.user == post.author
     

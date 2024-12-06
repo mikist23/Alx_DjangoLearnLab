@@ -31,7 +31,7 @@ class LoginUserForm(forms.Form):
 
 # create a post
 
-class CreatePost(forms.ModelForm):
+class CreatePostForm(forms.ModelForm):
 
     class Meta:
         model = Post
