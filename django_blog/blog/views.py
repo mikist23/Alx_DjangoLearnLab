@@ -78,16 +78,14 @@ class DetailPost(DetailView):
         return context
     
     def post(self, request, *args, **kwargs):
-        self.objet = self.get_object()
-        form = CommentPostForm(request.POST)
-
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.post = self.get_object
-            comment.author = request.user
-            comment.save()
-            return redirect('detail_post', pk=self.object.pk)
-        return self.render_to_response(self.get_context_data(form=form))
+        post = self.get_object()  # Retrieve the Post instance
+        comment = Comment(
+            post=post,
+            author=request.user,
+            content=request.POST.get('content')
+        )
+        comment.save()
+        return redirect(post.get_absolute_url())  # Redirect to the post detail page
 
 
 class CreatePost(LoginRequiredMixin, CreateView):
@@ -126,21 +124,21 @@ class DeletePost(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Comment
     fields = ['content']
-    template_name = 'blog/comment_form.html'
+    template_name = 'blog/post_form.html'
 
     def get_success_url(self):
         return self.object.post.get_absolute_url()
     
     def test_func(self):
-        return self.request.user == self.get_object.author
+        return self.request.user == self.get_object().author
     
 
 class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Comment
-    template_name = 'blog/comment_delete.html'
+    template_name = 'blog/post_delete.html'
 
     def get_success_url(self):
         return self.object.post.get_absolute_url()
     
     def test_func(self):
-        return self.request.user == self.get_object.author
+        return self.request.user == self.get_object().author

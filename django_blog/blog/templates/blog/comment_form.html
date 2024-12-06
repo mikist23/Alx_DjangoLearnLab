@@ -1,0 +1,12 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+{% csrf_token %}
+  <h2>Update Comment</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Update</button>
+  </form>
+  <a href="{{ object.post.get_absolute_url }}">Cancel</a>
+{% endblock %}

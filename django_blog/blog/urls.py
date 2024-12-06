@@ -29,7 +29,7 @@ urlpatterns = [
 
 
     path('comment/<int:pk>/update/', CommentUpdateView.as_view(), name='comment_update' ),
-    path('comment/<int:pk>/update/', CommentDeleteView.as_view(), name='comment_delete' ),
+    path('comment/<int:pk>/delete/', CommentDeleteView.as_view(), name='comment_delete' ),
 
 
     path('login/', login_user, name='login'),

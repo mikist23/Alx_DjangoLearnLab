@@ -500,3 +500,154 @@ footer {
 .post-meta a:hover {
     color: #ffcc00;
 }
+
+
+
+
+/* Styles for the post detail */
+
+.content {
+    margin-bottom: 30px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.content h1 {
+    font-size: 2rem;
+    color: #333;
+}
+
+.content img.detail-image {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    margin: 20px 0;
+    border-radius: 10px;
+}
+
+.actions {
+    margin-top: 10px;
+}
+
+.actions .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-right: 10px;
+    text-decoration: none;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.actions .btn.btn-edit {
+    background-color: #007bff;
+}
+
+.actions .btn.btn-danger {
+    background-color: #dc3545;
+}
+
+.comments-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.comments-list {
+    list-style: none;
+    padding: 0;
+}
+
+.comment-item {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f5f5f5;
+}
+
+.comment-item p {
+    margin: 0 0 5px;
+}
+
+.comment-actions {
+    margin-top: 5px;
+}
+
+.comment-actions .btn {
+    margin-right: 5px;
+    font-size: 0.9rem;
+}
+
+/* Add Comment Section Styling */
+.add-comment {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.comment-heading {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #333;
+    font-weight: bold;
+}
+
+.comment-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.comment-label {
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.comment-input {
+    font-size: 0.9rem;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    width: 100%;
+    max-width: 500px; /* Ensures the input is not oversized */
+    resize: none; /* Removes resizing handle for better control */
+}
+
+.comment-btn {
+    width: fit-content;
+    padding: 8px 20px;
+    font-size: 0.9rem;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.comment-btn:hover {
+    background-color: #0056b3;
+}
+
+.login-prompt {
+    font-size: 0.9rem;
+    margin-top: 10px;
+}
+
+.btn-login {
+    color: #fff;
+    background-color: #007bff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.btn-login:hover {
+    background-color: #0056b3;
+}
+
