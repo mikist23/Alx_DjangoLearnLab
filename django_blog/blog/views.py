@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import RegisterUserForm, LoginUserForm, CreatePostForm, CommentPostForm
+from .forms import RegisterUserForm, LoginUserForm, CreatePostForm, CommentForm
 from django.contrib.auth import authenticate
 from django.contrib.auth import login
 from django.contrib.auth.models import User
@@ -73,7 +73,7 @@ class DetailPost(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = CommentPostForm()
+        context['form'] = CommentForm()
         context['comments'] = self.object.comments.all()
         return context
     
@@ -123,7 +123,7 @@ class DeletePost(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 # Comment CRUD operations
 class CommentCreateView(LoginRequiredMixin, CreateView):
     model = Comment 
-    
+
 class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Comment
     fields = ['content']
