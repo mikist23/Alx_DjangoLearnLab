@@ -1,13 +1,20 @@
 {% extends "blog/base.html" %}
 {% block content %}
 {% csrf_token %}
+<div class="content">
     <h1>All Posts</h1>
-    <ul>
+    <ul class="post-list">
         {% for post in posts %}
-            <li>
-                <a href="{% url 'detail_post' post.id %}">{{ post.title }}</a>
-                by {{ post.author }} on {{ post.created_at }}
-            </li>
+        <li class="post-item">
+            <a href="{% url 'detail_post' post.id %}" class="post-link">
+                {% if post.image %}
+                <img src="{{ post.image.url }}" alt="{{ post.title }}" class="post-image">
+                {% endif %}
+                <h2>{{ post.title }}</h2>
+            </a>
+            <p>By <strong>{{ post.author }}</strong> on {{ post.created_at }}</p>
+        </li>
         {% endfor %}
     </ul>
+</div>
 {% endblock %}

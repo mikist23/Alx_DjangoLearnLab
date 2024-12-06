@@ -1,14 +1,18 @@
 {% extends "blog/base.html" %}
 {% block content %}
 {% csrf_token %}
+<div class="content">
     <h1>{{ post.title }}</h1>
-    <p>by {{ post.author }} on {{ post.created_at }}</p>
-    <p>{{ post.content }}</p>
+    <p>By <strong>{{ post.author }}</strong> on {{ post.created_at }}</p>
     {% if post.image %}
-        <img src="{{ post.image.url }}" alt="{{ post.title }}">
+    <img src="{{ post.image.url }}" alt="{{ post.title }}" class="detail-image">
     {% endif %}
+    <p>{{ post.content }}</p>
     {% if request.user == post.author %}
-        <a href="{% url 'update_post' post.id %}">Edit</a>
-        <a href="{% url 'delete_post' post.id %}">Delete</a>
+    <div class="actions">
+        <a href="{% url 'update_post' post.id %}" class="btn">Edit</a>
+        <a href="{% url 'delete_post' post.id %}" class="btn danger">Delete</a>
+    </div>
     {% endif %}
+</div>
 {% endblock %}

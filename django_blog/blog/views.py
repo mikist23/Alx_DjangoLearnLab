@@ -5,7 +5,6 @@ from django.contrib.auth import login
 from django.contrib.auth.models import User
 from .models import Post
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .serializers import PostSerializers
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from rest_framework import generics, permissions, status, authentication
 from django.urls import reverse_lazy
