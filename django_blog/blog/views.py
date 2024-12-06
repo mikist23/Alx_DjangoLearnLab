@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import RegisterUserForm, LoginUserForm, CreatePostForm
+from .forms import RegisterUserForm, LoginUserForm, CreatePostForm, CommentPostForm
 from django.contrib.auth import authenticate
 from django.contrib.auth import login
 from django.contrib.auth.models import User
@@ -71,6 +71,24 @@ class DetailPost(DetailView):
     template_name = 'blog/post_detail.html'
     context_object_name = 'post'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = CommentPostForm()
+        context['comments'] = self.object.comments.all()
+        return context
+    
+    def post(self, request, *args, **kwargs):
+        self.objet = self.get_object()
+        form = CommentPostForm(request.POST)
+
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = self.get_object
+            comment.author = request.user
+            comment.save()
+            return redirect('detail_post', pk=self.object.pk)
+        return self.render_to_response(self.get_context_data(form=form))
+
 
 class CreatePost(LoginRequiredMixin, CreateView):
     model = Post
@@ -105,7 +123,24 @@ class DeletePost(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     
 
 # Comment CRUD operations
-class CommentList(ListView):
-
+class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Comment
+    fields = ['content']
+    template_name = 'blog/comment_form.html'
+
+    def get_success_url(self):
+        return self.object.post.get_absolute_url()
     
+    def test_func(self):
+        return self.request.user == self.get_object.author
+    
+
+class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Comment
+    template_name = 'blog/comment_delete.html'
+
+    def get_success_url(self):
+        return self.object.post.get_absolute_url()
+    
+    def test_func(self):
+        return self.request.user == self.get_object.author

@@ -9,7 +9,9 @@ from .views import (
     UpdatePost,
     DeletePost,
     DetailPost,
-    ListPost
+    ListPost,
+    CommentUpdateView,
+    CommentDeleteView
     )
 
 urlpatterns = [
@@ -23,6 +25,12 @@ urlpatterns = [
     path('post/new/', CreatePost.as_view(), name='create_post'),
     path('post/<int:pk>/update/', UpdatePost.as_view(), name='update_post'),
     path('post/<int:pk>/delete/', DeletePost.as_view(), name='delete_post'),
+    
+
+
+    path('comment/<int:pk>/update/', CommentUpdateView.as_view(), name='comment_update' ),
+    path('comment/<int:pk>/update/', CommentDeleteView.as_view(), name='comment_delete' ),
+
 
     path('login/', login_user, name='login'),
     path('profile/', profile, name='profile'),

@@ -1,18 +1,31 @@
 {% extends "blog/base.html" %}
 {% block content %}
 {% csrf_token %}
-<div class="content">
-    <h1>{{ post.title }}</h1>
-    <p>By <strong>{{ post.author }}</strong> on {{ post.created_at }}</p>
-    {% if post.image %}
-    <img src="{{ post.image.url }}" alt="{{ post.title }}" class="detail-image">
-    {% endif %}
-    <p>{{ post.content }}</p>
-    {% if request.user == post.author %}
-    <div class="actions">
-        <a href="{% url 'update_post' post.id %}" class="btn">Edit</a>
-        <a href="{% url 'delete_post' post.id %}" class="btn danger">Delete</a>
-    </div>
-    {% endif %}
-</div>
+<h1>{{ post.title }}</h1>
+<p>{{ post.content }}</p>
+<hr>
+<h2>Comments</h2>
+<ul>
+    {% for comment in comments %}
+    <li>
+        <p>{{ comment.content }}</p>
+        <small>By {{ comment.author }} on {{ comment.created_at }}</small>
+        {% if comment.author == user %}
+            <a href="{% url 'comment_update' comment.id %}">Edit</a> |
+            <a href="{% url 'comment_delete' comment.id %}">Delete</a>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+<hr>
+{% if user.is_authenticated %}
+<h3>Add a comment:</h3>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Post Comment</button>
+</form>
+{% else %}
+<p><a href="{% url 'login' %}">Log in</a> to leave a comment.</p>
+{% endif %}
 {% endblock %}
