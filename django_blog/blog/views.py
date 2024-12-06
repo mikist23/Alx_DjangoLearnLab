@@ -3,7 +3,7 @@ from .forms import RegisterUserForm, LoginUserForm, CreatePostForm
 from django.contrib.auth import authenticate
 from django.contrib.auth import login
 from django.contrib.auth.models import User
-from .models import Post
+from .models import Post, Comment
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from rest_framework import generics, permissions, status, authentication
@@ -102,4 +102,10 @@ class DeletePost(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         post = self.get_object()
         return self.request.user == post.author
+    
+
+# Comment CRUD operations
+class CommentList(ListView):
+
+    model = Comment
     

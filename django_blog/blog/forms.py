@@ -2,7 +2,7 @@ from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django import forms
-from .models import Post
+from .models import Post, Comment
 from django.forms.widgets import PasswordInput, TextInput,EmailInput
 
 class RegisterUserForm(UserCreationForm):
@@ -29,10 +29,26 @@ class LoginUserForm(forms.Form):
     
     
 
-# create a post
+# create a post form
 
 class CreatePostForm(forms.ModelForm):
 
     class Meta:
         model = Post
         fields = [ 'title', 'content', 'image']
+
+
+# create a comment post form
+
+class CommentPostForm(forms.ModelForm):
+
+    class Meta:
+        model = Comment
+        fields = ['content']
+        widgets = {
+            'content': forms.Textarea(attrs={
+                'class':'form_control',
+                'placeholder': 'Write a comment',
+                'rows':3,
+            })
+        }
