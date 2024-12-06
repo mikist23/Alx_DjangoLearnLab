@@ -2,6 +2,7 @@ from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django import forms
+from .models import Post
 from django.forms.widgets import PasswordInput, TextInput,EmailInput
 
 class RegisterUserForm(UserCreationForm):
@@ -27,3 +28,11 @@ class LoginUserForm(forms.Form):
         return cleaned_data
     
     
+
+# create a post
+
+class CreatePost(forms.ModelForm):
+
+    class Meta:
+        model = Post
+        fields = [ 'title', 'content', 'image']

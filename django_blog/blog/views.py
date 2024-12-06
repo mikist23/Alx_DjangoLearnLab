@@ -3,6 +3,11 @@ from .forms import RegisterUserForm, LoginUserForm
 from django.contrib.auth import authenticate
 from django.contrib.auth import login
 from django.contrib.auth.models import User
+from .models import Post
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from .serializers import PostSerializers
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DetailView
+from rest_framework import generics, permissions, status, authentication
 
 # Create your views here.
 
@@ -52,3 +57,35 @@ def profile(request):
     user = User.objects.all()
 
     return render(request, 'blog/profile.html')
+
+
+# create a post
+
+class ListPost(ListView):
+    model = Post
+    template_name = 'blog/post_list.html'
+    context_object_name = 'posts'
+
+class DetailPost(DetailView):
+    model = Post
+    template_name = 'blog/post_detail.html'
+    context_object_name = 'post'
+
+class CreatePost(CreateView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializers
+    permission_classes = [permissions.AllowAny]
+
+
+class UpdatePost(generics.UpdateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializers
+    permission_classes = [permissions.AllowAny]
+    lookup_field = 'id'
+
+class DeletePost(generics.DestroyAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializers
+    permission_classes = [permissions.AllowAny]
+    lookup_field = 'id'
+    

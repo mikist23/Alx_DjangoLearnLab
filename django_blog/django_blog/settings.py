@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog',
+    'rest_framework',
+    
 ]
 
 MIDDLEWARE = [
@@ -136,4 +138,5 @@ AUTHENTICATION_BACKENDS = [
     'blog.authentication.EmailBackend',  # Replace 'your_app_name' with your app's name
     'django.contrib.auth.backends.ModelBackend',
 ]
+
 

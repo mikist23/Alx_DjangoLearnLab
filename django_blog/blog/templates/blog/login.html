@@ -1,6 +1,7 @@
 {% extends "blog/base.html" %}
 
 {% block content %}
+{% csrf_token %}
 <div class="login-container">
     <h2 style="text-align: center; margin-bottom: 20px;">Login</h2>
     <form method="post", autocomplete="off">
