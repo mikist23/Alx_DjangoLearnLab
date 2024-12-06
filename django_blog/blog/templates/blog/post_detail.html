@@ -1,0 +1,14 @@
+{% extends "blog/base.html" %}
+{% block content %}
+{% csrf_token %}
+    <h1>{{ post.title }}</h1>
+    <p>by {{ post.author }} on {{ post.created_at }}</p>
+    <p>{{ post.content }}</p>
+    {% if post.image %}
+        <img src="{{ post.image.url }}" alt="{{ post.title }}">
+    {% endif %}
+    {% if request.user == post.author %}
+        <a href="{% url 'update_post' post.id %}">Edit</a>
+        <a href="{% url 'delete_post' post.id %}">Delete</a>
+    {% endif %}
+{% endblock %}
