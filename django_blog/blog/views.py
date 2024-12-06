@@ -37,7 +37,7 @@ def login_user(request):
 
                 if user:
                     login(request, user)
-                    return redirect('profile')
+                    return redirect('list_post')
             except User.DoesNotExist:
                 form.add_error(None, "Invalid email or password.")
     else:
@@ -74,6 +74,7 @@ class CreatePost(LoginRequiredMixin, CreateView):
     model = Post
     form_class = CreatePostForm
     template_name = 'blog/post_form.html'
+    success_url = '/posts/'
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -85,6 +86,7 @@ class UpdatePost(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
     form_class = CreatePostForm
     template_name = 'blog/post_form.html'
+    success_url = '/posts/'
 
     def test_func(self):
         post = self.get_object()
