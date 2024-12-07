@@ -32,10 +32,24 @@ class LoginUserForm(forms.Form):
 # create a post form
 
 class CreatePostForm(forms.ModelForm):
-
+      
+    tags = forms.CharField(max_length=200, required=False, help_text='Enter tags separated by commas.')
     class Meta:
         model = Post
-        fields = [ 'title', 'content', 'image']
+        fields = [ 'title', 'content', 'image', 'tags']
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        tags = self.cleaned_data['tags']
+        if commit:
+            instance.save()
+            instance.tags.clear()
+            tag_names = [tag.strip() for tag in tags.split(',') if tag.strip()]
+            for tag_name in tag_names:
+                tag, created = Tag.objects.get_or_create(name=tag_name)
+                instance.tags.add(tag)
+        return instance
+
 
 
 # create a comment post form
