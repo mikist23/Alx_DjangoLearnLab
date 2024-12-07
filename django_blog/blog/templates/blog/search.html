@@ -1,5 +1,6 @@
 {% extends "blog/base.html" %}
-{% block conent %}
+{% block content %}
+{% csrf_token %}
 <h1>Search Results for "{{ query }}"</h1>
 <ul>
     {% for post in posts %}
@@ -8,5 +9,4 @@
     <p>No results found.</p>
     {% endfor %}
 </ul>
-
-{% endblock  %}
+{% endblock %}
