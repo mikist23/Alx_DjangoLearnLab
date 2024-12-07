@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import login
 from django.contrib.auth.models import User
 from .models import Post, Comment, Tag
+from django.shortcuts import render, get_object_or_404
 from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -150,20 +151,21 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 # views for search post
 
+# Search Posts View
 def search_posts(request):
-    query = request.GET.get('q')
-    posts = Post.objects.all()
+    query = request.GET.get('q', '')  # Default to an empty string if no query is provided
+    posts = Post.objects.all()  # Start with all posts
     if query:
-          posts = posts.filter(
-            Q(title__icontains=query)|
-             Q(content__icontains=query)|
+        # Explicit use of Post.objects.filter
+        posts = Post.objects.filter(
+            Q(title__icontains=query) |
+            Q(content__icontains=query) |
             Q(tags__name__icontains=query)
-         ).distinct()
-    return render(request, 'blog/search.html', {'posts':posts}, {'query':query})
-    
-# filter by tag view
+        ).distinct()  # Avoid duplicate results
+    return render(request, 'blog/search.html', {'posts': posts, 'query': query})
 
+# Filter Posts by Tag View
 def posts_by_tag(request, tag_name):
-    tag = Tag.objects.get(name = tag_name)
-    posts = tag.posts.all()
-    return render(request, 'blog/tag_posts.html', {'tag':tag}, {'posts':posts})
+    tag = get_object_or_404(Tag, name=tag_name)  # Better error handling with `get_object_or_404`
+    posts = Post.objects.filter(tags=tag)  # Explicit filtering by tag
+    return render(request, 'blog/tag_posts.html', {'tag': tag, 'posts': posts})
