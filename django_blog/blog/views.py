@@ -3,7 +3,8 @@ from .forms import RegisterUserForm, LoginUserForm, CreatePostForm, CommentForm
 from django.contrib.auth import authenticate
 from django.contrib.auth import login
 from django.contrib.auth.models import User
-from .models import Post, Comment
+from .models import Post, Comment, Tag
+from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from rest_framework import generics, permissions, status, authentication
@@ -145,3 +146,24 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     
     def test_func(self):
         return self.request.user == self.get_object().author
+    
+
+# views for search post
+
+def search_posts(request):
+    query = request.GET.get('q')
+    posts = Post.objects.all()
+    if query:
+          posts = posts.filter(
+            Q(title__icontains=query)|
+             Q(content__icontains=query)|
+            Q(tags__name__icontains=query)
+         ).distinct()
+    return render(request, 'blog/search.html', {'posts':posts}, {'query':query})
+    
+# filter by tag view
+
+def posts_by_tag(request, tag_name):
+    tag = Tag.objects.get(name = tag_name)
+    posts = tag.posts.all()
+    return render(request, 'blog/tag_posts.html', {'tag':tag}, {'posts':posts})

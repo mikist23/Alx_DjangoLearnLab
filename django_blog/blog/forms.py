@@ -2,7 +2,7 @@ from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django import forms
-from .models import Post, Comment
+from .models import Post, Comment, Tag
 from django.forms.widgets import PasswordInput, TextInput,EmailInput
 
 class RegisterUserForm(UserCreationForm):

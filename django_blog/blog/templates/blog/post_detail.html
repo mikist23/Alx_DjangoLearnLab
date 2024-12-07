@@ -61,5 +61,15 @@
     {% endif %}
 </div>
 
+<!-- tag section -->  
+<div class="tags">
+    <strong>Tags:</strong>
+    {% for tag in post.tags.all %}
+        <a href="{% url 'posts_by_tag' tag.name %}" class="tag">{{ tag.name }}</a>
+    {% empty %}
+        <p>No tags available.</p>
+    {% endfor %}
+</div>
+
 
 {% endblock %}

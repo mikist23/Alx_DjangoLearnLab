@@ -651,3 +651,38 @@ footer {
     background-color: #0056b3;
 }
 
+
+
+
+/* CSS for search bar */
+form[action="{% url 'search_posts' %}"] {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+form[action="{% url 'search_posts' %}"] input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px;
+}
+
+form[action="{% url 'search_posts' %}"] button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 0 4px 4px 0;
+}
+
+/* CSS for tags */
+.tags a.tag {
+    display: inline-block;
+    margin: 2px;
+    padding: 5px 10px;
+    background-color: #f1f1f1;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #555;
+}
+
