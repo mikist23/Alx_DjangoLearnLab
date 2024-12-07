@@ -164,8 +164,24 @@ def search_posts(request):
         ).distinct()  # Avoid duplicate results
     return render(request, 'blog/search.html', {'posts': posts, 'query': query})
 
-# Filter Posts by Tag View
-def posts_by_tag(request, tag_name):
-    tag = get_object_or_404(Tag, name=tag_name)  # Better error handling with `get_object_or_404`
-    posts = Post.objects.filter(tags=tag)  # Explicit filtering by tag
-    return render(request, 'blog/tag_posts.html', {'tag': tag, 'posts': posts})
+
+
+
+class PostByTagListView(ListView):
+    model = Post
+    template_name = 'blog/tag_posts.html'
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        # Retrieve the tag based on the slug from the URL
+        tag_name = self.kwargs.get('tag_name')
+        tag = get_object_or_404(Tag, name=tag_name)
+        # Filter posts associated with the tag
+        return Post.objects.filter(tags=tag)
+
+    def get_context_data(self, **kwargs):
+        # Pass the tag to the template for display
+        context = super().get_context_data(**kwargs)
+        tag_name = self.kwargs.get('tag_name')
+        context['tag'] = get_object_or_404(Tag, name=tag_name)
+        return context

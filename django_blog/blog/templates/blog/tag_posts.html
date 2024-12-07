@@ -1,8 +1,15 @@
-<h1>Posts tagged with "{{ tag.name }}"</h1>
-<ul>
-    {% for post in posts %}
-    <li><a href="{% url 'detail_post' post.id %}">{{ post.title }}</a></li>
-    {% empty %}
-    <p>No posts available for this tag.</p>
-    {% endfor %}
-</ul>
+{% extends "blog/base.html" %}
+{% block content %}
+<div class="content">
+    <h1>Posts Tagged: "{{ tag.name }}"</h1>
+    <ul>
+        {% for post in posts %}
+            <li>
+                <a href="{% url 'detail_post' post.pk %}">{{ post.title }}</a> by {{ post.author }} on {{ post.created_at }}
+            </li>
+        {% empty %}
+            <p>No posts found for this tag.</p>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
