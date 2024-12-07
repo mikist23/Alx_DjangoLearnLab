@@ -61,8 +61,5 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ['content']
         widgets = {
-            'tags': TagWidget(attrs={
-                'placeholder': 'Add tags (comma-separated)',
-                'class': 'form-control',
-            }),
+            'tags': TagWidget(),
         }
