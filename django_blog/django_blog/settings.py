@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'blog',
     'rest_framework',
     'taggit',
+    'django_select2',
     
 ]
 

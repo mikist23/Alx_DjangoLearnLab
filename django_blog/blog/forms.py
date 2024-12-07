@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django import forms
 from .models import Post, Comment, Tag
+from taggit.forms import TagWidget
 from django.forms.widgets import PasswordInput, TextInput,EmailInput
 
 class RegisterUserForm(UserCreationForm):
@@ -60,9 +61,8 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ['content']
         widgets = {
-            'content': forms.Textarea(attrs={
-                'class':'form_control',
-                'placeholder': 'Write a comment',
-                'rows':3,
-            })
+            'tags': TagWidget(attrs={
+                'placeholder': 'Add tags (comma-separated)',
+                'class': 'form-control',
+            }),
         }
