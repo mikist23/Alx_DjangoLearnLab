@@ -19,10 +19,21 @@ class RegistrationSerializer(serializers.ModelSerializer):
              password= validated_data['password'],
              bio = validated_data.get('bio',''),
              profile_picture = validated_data.get('profile_picture', None),
-             token = Token.objects.create()
+             
         )
 
+         # Generate token for the user
+        Token.objects.create(user=user)
+
         return user
+    
+    def to_representation(self, instance):
+        """Add token to the response."""
+        representation = super().to_representation(instance)
+        token = Token.objects.get(user=instance)
+        representation['token'] = token.key  # Append the token
+        representation.pop('password', None)  # Ensure password is not included in the response
+        return representation
     
 # CLASS FOR LISTING ALL THE USERS
 class ListUsersSerializer(serializers.ModelSerializer):
