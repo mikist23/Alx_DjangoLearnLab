@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+# CLASS FOR REGISTERING NEW USERS
 class RegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
 
@@ -21,10 +22,20 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
         return user
     
+# CLASS FOR LISTING ALL THE USERS
 class ListUsersSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username', 'email', 'bio', 'profile_picture'] 
+
+
+# CLASS FOR LISTING ALL THE USERS
+class DeleteUserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email', 'bio', 'profile_picture'] 
         
+# CLASS FOR TOKEN GENERATION
 class TokenSerializer(serializers.ModelSerializer):
     token = serializers.CharField(read_only=True)

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .serializers import RegistrationSerializer, ListUsersSerializer, TokenSerializer
+from .serializers import RegistrationSerializer, ListUsersSerializer, TokenSerializer, DeleteUserSerializer
 from .models import CustomUser
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -48,4 +48,13 @@ class ListUsersView(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = ListUsersSerializer
 
-    
+
+class DeleteUserView(generics.DestroyAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = User.objects.all()
+    serializer_class = DeleteUserSerializer
+    lookup_field = ['id']
+
+    def get_object(self):
+        # Ensure that the user can only delete themselves
+        return self.request.user  # Return the authenticated user
