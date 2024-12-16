@@ -9,7 +9,7 @@ from django.utils import timezone
 class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)  # Use AUTH_USER_MODEL here
     title = models.CharField(max_length=200, default="Default post title")
-    content = models.TextField(default="Default post content")
+    content = models.TextField()
     created_at = models.DateTimeField( default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -21,7 +21,7 @@ class Post(models.Model):
 class Comment(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)  # Use AUTH_USER_MODEL here
     post = models.ForeignKey(Post, on_delete=models.CASCADE,null=True,blank=True)
-    content = models.TextField(default="Default comment content")
+    content = models.TextField()
     created_at = models.DateTimeField( default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
 
