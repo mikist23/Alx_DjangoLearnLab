@@ -51,7 +51,34 @@ class PostViewSet(viewsets.ModelViewSet):
         instance.delete()
 
 
-class CreteCommentView(viewsets.ModelViewSet):
+class CommentViewSet(viewsets.ModelViewSet):
+    """
+        ViewSet for CRUD operations on Comment model.
+    """
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     permission_classes = [IsAuthenticated]
+
+
+    def perform_create(self, serializer):
+        """
+           Automatically set the author of a comment to the logged-in user.
+        """
+        serializer.save(author = self.request.user)
+
+    def perform_update(self, serializer):
+        """
+           Ensure only the author can update the comment.
+        """
+        comment = self.get_object()
+        if comment.author != self.request.user:
+            raise PermissionDenied("You do not have permission to edit this comment.")
+        serializer.save()
+        
+    def perform_destroy(self, instance):
+        """
+           Ensure only the author can delete the comment.
+        """
+        if instance.author != self.request.user:
+            raise PermissionDenied("You do not have permission to delete this comment.")
+        instance.delete()
