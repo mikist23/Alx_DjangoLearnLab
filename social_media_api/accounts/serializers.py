@@ -1,10 +1,13 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from rest_framework.authtoken.models import Token
+from .models import Post, Comment
 
 User = get_user_model()
 
-# CLASS FOR REGISTERING NEW USERS
+# --------------------------------------------  USER CRUD START ------------------------------------
+
+# SERIALIZER CLASS FOR REGISTERING NEW USERS
 class RegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField()
 
@@ -35,27 +38,55 @@ class RegistrationSerializer(serializers.ModelSerializer):
         representation.pop('password', None)  # Ensure password is not included in the response
         return representation
     
-# CLASS FOR LISTING ALL THE USERS
+# SERIALIZER CLASS FOR LISTING ALL THE USERS
 class ListUsersSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username', 'email', 'bio', 'profile_picture'] 
 
 
-# CLASS FOR LISTING ALL THE USERS
+# SERIALIZER CLASS FOR LISTING ALL THE USERS
 class DeleteUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
         fields = ['id', 'username', 'email', 'bio', 'profile_picture'] 
         
-# CLASS FOR TOKEN GENERATION
+# SERIALIZER CLASS FOR TOKEN GENERATION
 class TokenSerializer(serializers.ModelSerializer):
     token = serializers.CharField(read_only=True)
 
-# CLASS FOR USER PROFILE
+# SERIALIZER CLASS FOR USER PROFILE
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username', 'email', 'bio', 'profile_picture']
         read_only_fields = ['id', 'username']  # Prevent updates to certain fields
+
+
+# --------------------------------------------  USER CRUD END ------------------------------------
+
+
+# --------------------------------------------  POST, COMMENT CRUD START ------------------------------------
+
+# SERIALIZER CLASS FOR THE POST
+class PostSerializer(serializers.ModelSerializer):
+    author_username = serializers.ReadOnlyField(source='author.username')
+    class Meta:
+        model = Post
+        fields = ['id', 'author', 'author_username', 'title', 'content', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'created_at', 'updated_at']
+
+
+
+# SERIALIZER CLASS FOR THE COMMENT
+class CommentSerializer(serializers.ModelSerializer):
+    author_username = serializers.ReadOnlyField(source='author.username')  # Display username
+    post_title = serializers.ReadOnlyField(source='post.title')  # Display post title for reference
+    
+    class Meta:
+        model = Comment
+        fields = ['id', 'author', 'author_username', 'post', 'post_title', 'content', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'created_at', 'updated_at']
+
+# --------------------------------------------  POST, COMMENT CRUD END ------------------------------------
