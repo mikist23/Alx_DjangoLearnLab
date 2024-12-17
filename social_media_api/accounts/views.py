@@ -10,6 +10,7 @@ from django.contrib.auth import get_user_model
 from rest_framework import generics
 from rest_framework import status
 from rest_framework import viewsets
+from rest_framework import permissions
 from rest_framework.generics import GenericAPIView
 from rest_framework.generics import ListAPIView, UpdateAPIView
 
@@ -96,9 +97,9 @@ class UserProfileView(APIView):
 
 # view for following a user
 
-class FollowUserView(GenericAPIView):
+class FollowUserView(generics.GenericAPIView):
     queryset = CustomUser.objects.all()
-    permission_classes = [IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
     
     def post(self, request, user_id, *args, **kwargs):
         try:
@@ -115,9 +116,9 @@ class FollowUserView(GenericAPIView):
 
 # view for unfollowing a user
 
-class UnfollowUserView(UpdateAPIView):
+class UnfollowUserView(generics.GenericAPIView):
     queryset = CustomUser.objects.all()
-    permission_classes = [IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, user_id, *args, **kwargs):
         try:
