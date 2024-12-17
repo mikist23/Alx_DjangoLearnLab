@@ -84,7 +84,18 @@ class CommentViewSet(viewsets.ModelViewSet):
             raise PermissionDenied("You do not have permission to delete this comment.")
         instance.delete()
 
+# for user feeds
+class UserFeedView(generics.ListAPIView):
 
+    serializer_class = PostSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        
+        # Get the users the current user is following
+        following_users = self.request.user.following.all()
+        # Retrieve posts from these users, ordered by creation date (most recent first)
+        return Post.objects.filter(author__in=following_users).order_by('-created_at')
 
 
 
