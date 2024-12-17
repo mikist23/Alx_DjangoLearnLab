@@ -202,3 +202,16 @@ class UserFollowingListView(ListAPIView):
 #         following = request.user.following.all()
 #         serializer = FollowSerializer(following, many=True)
 #         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+# # view for listing all users th current user is following
+# class UserFollowingListView(ListAPIView):
+    
+#     serializer_class = FollowSerializer
+#     permission_classes = [IsAuthenticated]
+
+#     def get_queryset(self):
+#         return self.request.user.following.all() #Retrive the users being followed
+    
+
+
