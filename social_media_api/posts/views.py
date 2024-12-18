@@ -240,17 +240,51 @@ class LikePostView(APIView):
         except Post.DoesNotExist:
             return Response({'error': "Post not found"}, status=status.HTTP_404_NOT_FOUND)
         
-# Unliking a post
+# Unliking a post USING APIVIEW
 
-class UnlikingPostView(APIView):
+# class UnlikingPostView(APIView):
+#     permission_classes = [IsAuthenticated]
+
+#     def post(self, request, pk):
+#         try:
+#             post = Post.objects.get(pk=pk)
+#             user = request.user
+
+#             # check if the user have liked the post
+#             like = Like.objects.filter(liked_post=post, user_like=user).first()
+#             if not like:
+#                 return Response({"error": "You haven't liked this post"}, status=status.HTTP_400_BAD_REQUEST)
+
+#             # Remove the like
+#             like.delete()
+
+#             # Remove the associated notification
+#             content_type = ContentType.objects.get_for_model(Post)
+#             Notification.objects.filter(
+#                 recipient=post.author,
+#                 actor=user,
+#                 verb="liked",
+#                 content_type=content_type,
+#                 object_id=post.id,
+#             ).delete()
+
+#             return Response({"success": "Post Unliked Successfully"}, status=status.HTTP_200_OK)
+
+#         except Post.DoesNotExist:
+#             return Response({'error': "Post does not exist"}, status=status.HTTP_404_NOT_FOUND)
+
+
+# # Unliking a post USING GENERICAPIVIEW
+class UnlikingPostView(generics.GenericAPIView):
+    queryset = Post.objects.all()  # Query for the Post model
     permission_classes = [IsAuthenticated]
 
     def post(self, request, pk):
         try:
-            post = Post.objects.get(pk=pk)
+            post = self.get_object()  # Get the Post object using `pk`
             user = request.user
 
-            # check if the user have liked the post
+            # Check if the user has liked the post
             like = Like.objects.filter(liked_post=post, user_like=user).first()
             if not like:
                 return Response({"error": "You haven't liked this post"}, status=status.HTTP_400_BAD_REQUEST)
@@ -258,8 +292,17 @@ class UnlikingPostView(APIView):
             # Remove the like
             like.delete()
 
-            return Response({"success": "Post Unliked Successfully"}, status=status.HTTP_200_OK)
+            # Remove the associated notification
+            content_type = ContentType.objects.get_for_model(Post)
+            Notification.objects.filter(
+                recipient=post.author,
+                actor=user,
+                verb="liked",
+                content_type=content_type,
+                object_id=post.id,
+            ).delete()
+
+            return Response({"success": "Post unliked successfully"}, status=status.HTTP_200_OK)
 
         except Post.DoesNotExist:
             return Response({'error': "Post does not exist"}, status=status.HTTP_404_NOT_FOUND)
-

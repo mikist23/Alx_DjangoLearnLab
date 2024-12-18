@@ -4,8 +4,8 @@ from .models import Notification
 # SERIALIZER CLASS FOR NOTIFICATION
 
 class NotificationSerializer(serializers.ModelSerializer):
-    actor_username = serializers.ReadOnlyField(sourcce='actor.username')
-    recipient_username = serializers.ReadOnlyField(sourcce='recipient.username')
+    actor_username = serializers.ReadOnlyField(source='actor.username')
+    recipient_username = serializers.ReadOnlyField(source='recipient.username')
     target_object = serializers.SerializerMethodField()
 
     class Meta:
