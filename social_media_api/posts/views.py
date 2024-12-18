@@ -13,6 +13,7 @@ from rest_framework import viewsets
 from rest_framework.exceptions import PermissionDenied
 from django.contrib.contenttypes.models import ContentType
 from notifications.models import Notification  # Import Notification model
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 
@@ -217,11 +218,12 @@ class LikePostView(APIView):
             user = request.user
 
             # Check if the user has already liked the post
-            if Like.objects.filter(liked_post=post, user_like=user).exists():
+            if Like.objects.filter(post=post, user=user).exists():
                 return Response({'error': "You have already liked this post"}, status=status.HTTP_400_BAD_REQUEST)
             
             # Create a like
-            Like.objects.create(liked_post = post, user_like=user)
+            # Like.objects.get_or_create(liked_post = post, user_like=user)
+            Like.objects.get_or_create(user=request.user, post=post)
 
             # Create a notification
             content_type = ContentType.objects.get_for_model(Post)
@@ -281,11 +283,12 @@ class UnlikingPostView(generics.GenericAPIView):
 
     def post(self, request, pk):
         try:
-            post = self.get_object()  # Get the Post object using `pk`
+            # post = self.get_object()  # Get the Post object using `pk`
+            post = get_object_or_404(Post, pk=pk)
             user = request.user
 
             # Check if the user has liked the post
-            like = Like.objects.filter(liked_post=post, user_like=user).first()
+            like = Like.objects.filter(post=post, user=user).first()
             if not like:
                 return Response({"error": "You haven't liked this post"}, status=status.HTTP_400_BAD_REQUEST)
 

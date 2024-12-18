@@ -34,9 +34,9 @@ class CommentSerializer(serializers.ModelSerializer):
 
 # SERIALIZERS CLASS FOR LIKES
 class LikeSerializer(serializers.ModelSerializer):
-    user_like_username = serializers.ReadOnlyField(source='user_like.username')
-    post_title = serializers.ReadOnlyField(source='liked_post.title')
+    user_like_username = serializers.ReadOnlyField(source='user.username')
+    post_title = serializers.ReadOnlyField(source='post.title')
 
     class Meta:
         model = Like
-        fields = ['id', 'liked_post', 'post_title', 'user_like_username']
+        fields = ['id', 'post', 'post_title', 'user_like_username']
