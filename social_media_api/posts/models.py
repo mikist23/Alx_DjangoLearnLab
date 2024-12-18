@@ -34,3 +34,7 @@ class Comment(models.Model):
 class Like(models.Model):
     liked_post = models.ForeignKey(Post, on_delete=models.CASCADE)
     user_like = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user_like.username} liked {self.liked_post}"
