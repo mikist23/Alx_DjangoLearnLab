@@ -5,6 +5,7 @@ from django.conf import settings
 from django.utils import timezone
 
 # Create your models here.
+# +++++++++++++++++________POST SECTION_____________++++++++++
 # MODEL CLASS FOR POSTS
 class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)  # Use AUTH_USER_MODEL here
@@ -27,3 +28,5 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"Comment by {self.author} on {self.post}"
+    
+
