@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from rest_framework.authtoken.models import Token
-from .models import Post, Comment
+from .models import Post, Comment, Like
 
 
 
@@ -28,3 +28,15 @@ class CommentSerializer(serializers.ModelSerializer):
         read_only_fields = ['id', 'created_at', 'updated_at']
 
 # --------------------------------------------  POST, COMMENT CRUD END ------------------------------------
+
+
+# _______++++++++++ LIKES SECTION +++++++++________
+
+# SERIALIZERS CLASS FOR LIKES
+class LikeSerializer(serializers.ModelSerializer):
+    user_like_username = serializers.ReadOnlyField(source='user_like.username')
+    post_title = serializers.ReadOnlyField(source='liked_post.title')
+
+    class Meta:
+        model = Like
+        fields = ['id', 'liked_post', 'post_title', 'user_like_username']
