@@ -284,7 +284,7 @@ class UnlikingPostView(generics.GenericAPIView):
     def post(self, request, pk):
         try:
             # post = self.get_object()  # Get the Post object using `pk`
-            post = get_object_or_404(Post, pk=pk)
+            post = generics.get_object_or_404(Post, pk=pk)
             user = request.user
 
             # Check if the user has liked the post
