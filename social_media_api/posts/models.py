@@ -30,3 +30,7 @@ class Comment(models.Model):
         return f"Comment by {self.author} on {self.post}"
     
 
+# +++++++++++++++++________LIKES SECTION_____________++++++++++
+class Like(models.Model):
+    liked_post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    user_like = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
