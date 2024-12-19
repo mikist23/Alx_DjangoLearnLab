@@ -122,7 +122,8 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10
 }
 
-
+# Security settings
+SECURE_BROWSER_XSS_FILTER = True
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
