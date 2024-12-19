@@ -13,6 +13,8 @@ from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework.generics import GenericAPIView
 from rest_framework.generics import ListAPIView, UpdateAPIView
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
 # Create your views here.
 
@@ -20,6 +22,8 @@ User = get_user_model()
 
 
 # REGISTRATION VIEW CREATING NEW USER
+
+@method_decorator(csrf_exempt, name='dispatch')
 class RegistrationView(APIView):
     permission_classes = [AllowAny]
 
