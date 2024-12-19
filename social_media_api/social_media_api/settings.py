@@ -124,6 +124,10 @@ REST_FRAMEWORK = {
 
 # Security settings
 SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = 'DENY'
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_SSL_REDIRECT = True  # Ensure your hosting supports HTTPS.
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
